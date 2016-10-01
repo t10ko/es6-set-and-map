@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Hello my friend</title>
+		<script src="universalObject.js" type="text/javascript"></script>
+		<script type="text/javascript">
+				something = {qwer: 'asdf'}, 
+				div_target = document.createElement( 'div' ), 
+				span_target = document.createElement( 'span' ), 
+				map = new UO.map();
+
+			map.add( span_target, 'qwer' );
+			map.add( div_target, 'asdf' );
+			map.add( 'qwer', span_target );
+
+			for( let [key,value] of map )
+				console.log( key, value );
+
+			console.log( '---------------------------' );
+		</script>
+		<style>
+			#list {
+				list-style: none;
+				position: relative;
+				width: 300px;
+				margin: 40px;
+				padding: 10px;
+			}
+			#list > li {
+				height: 20px;
+				width: 280px;
+				font-size: 20px;
+				padding: 15px;
+				margin: 5px 0px;
+				border: 1px solid #666;
+			}
+			.target {
+				height: 50px;
+				width: 50px;
+				background-color: green;
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="all">
+			<div class="target" style="font-size: 15px;">
+				A
+			</div>
+			<div class="target" style="font-size: 6vh;">
+				B
+			</div>
+			<div class="target" style="font-size: 1.5em;">
+				C
+			</div>
+			<div class="target" style="font-size: 120%;">
+				D
+			</div>
+		</div>
+	</body>
+</html>

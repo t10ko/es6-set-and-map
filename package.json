@@ -3,7 +3,7 @@
   "main": "es6-set&map",
   "description": "ES6 Set and Map polyfill and improvements.",
   "version": "1.0.2",
-  "homepage": "https://github.com/t10ko/es6-set&map",
+  "homepage": "https://github.com/t10ko/es6-set-and-map",
   "license": "GPL-3.0",
   "author": {
     "name": "Tigran Atayan",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/t10ko/es6-set&map.git"
+    "url": "https://github.com/t10ko/es6-set-and-map.git"
   },
   "devDependencies": {
     "gulp": "^3.8.9",
