@@ -2,7 +2,7 @@
   "name": "es6-set-and-map",
   "main": "es6-set&map",
   "description": "ES6 Set and Map polyfill and improvements.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/t10ko/es6-set-and-map",
   "license": "GPL-3.0",
   "author": {
