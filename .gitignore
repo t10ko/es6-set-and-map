@@ -1,3 +1,4 @@
 *.log
 *.html
+.npmignore
 node_modules

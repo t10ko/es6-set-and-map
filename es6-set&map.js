@@ -57,13 +57,18 @@
 		var result = child.prototype = Object.create( parent && parent.prototype || null );
 		return ( result.constructor = child, result );
 	};
- 
- 	/**
+
+	/**
  	 * Random string generation function.
  	 * @param {UINT}	len	Length for the desired string.
  	 * @return {String}
  	 */
-	function RandomString( len ) { return Math.random().toString( 16 ).substr( 2, len || 8 ); };
+	function RandomString( len ) {
+		len = len || 8;
+		var id = '';
+		while( (id += Math.random().toString(16).slice(2), id.length < len) );
+		return id.slice(0, len);
+	};
 
 	/**
 	 * Returns unique ID for each object.
