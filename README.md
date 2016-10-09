@@ -160,6 +160,6 @@ for( let value of obj ) {
 
 ## Browser support
 
-|Firefox|Chrome	|IE |Opera	|Safari |
+|Firefox|Chrome |IE |Opera  |Safari |
 |:-----:|:-----:|:-:|:-----:|:-----:|
-|5		|5		|9  |11.60	|5.1    |
+|5      |5      |9  |11.60  |5.1    |

@@ -1,59 +1,75 @@
 'use strict';
+
+var Config = ( function () {
+	var self = {}, 
+		file = 'main';
+
+	self.src = 'src/';
+	self.dist = 'dist/';
+
+	self.filePath = self.src + file + '.js';
+	self.minFilePath = self.dist + file + '.min.js';
+	return self;
+} ) ();
  
 var gulp = require( 'gulp' ), 
 	gzip = require( 'gulp-gzip' ), 
 	uglify = require( 'gulp-uglify' ), 
-	rename = require( 'gulp-rename' ),
-	fs = require('fs'),
-	moment = require('moment'),
-	pkg = require('./package.json'),
-	header = require('gulp-header'),
+	rename = require( 'gulp-rename' ), 
+	moment = require( 'moment' ), 
+	header = require( 'gulp-header' ), 
 
-	filename = 'es6-set&map.js', 
-	min_filename = 'es6-set&map.min.js', 
+	pkg = require('./package.json'),
+	fs = require('fs'),
+
 	uglify_settings = {
-		fromString: true,
+		fromString: true, 
 		mangle: {
-			sort:     true,
-			toplevel: true,
+			sort:     true, 
+			toplevel: true, 
 			eval:     true
 		},
 		compress: {
-			screw_ie8:    true,
-			properties:   true,
-			unsafe:       true,
-			sequences:    true,
-			dead_code:    true,
-			conditionals: true,
-			booleans:     true,
-			unused:       true,
-			if_return:    true,
-			join_vars:    true,
-			drop_console: true,
-			comparisons:  true,
-			loops:        true,
-			cascade:      true,
-			warnings:     true,
-			negate_iife:  true,
+			screw_ie8:    true, 
+			properties:   true, 
+			unsafe:       true, 
+			sequences:    true, 
+			dead_code:    true, 
+			conditionals: true, 
+			booleans:     true, 
+			unused:       true, 
+			if_return:    true, 
+			join_vars:    true, 
+			drop_console: true, 
+			comparisons:  true, 
+			loops:        true, 
+			cascade:      true, 
+			warnings:     true, 
+			negate_iife:  true, 
 			pure_getters: true
 		}
 	};
 
-gulp.task( 'minify', function () {
-	gulp.src( filename )
+gulp.task( 'minify', function ( done ) {
+	gulp.src( Config.filePath )
 		.pipe( uglify( uglify_settings ) )
-		.pipe( rename( min_filename ) )
-		.pipe( gulp.dest( './' ) )
+		.pipe( rename( { extname: '.min.js' } ) )
+		.pipe( gulp.dest( Config.dist ) )
+		.on( 'end', done );
 } );
-gulp.task( 'gzipify', function () {
-	gulp.src( min_filename )
+
+//	This task must be executed after minify.
+gulp.task( 'gzipify', ['minify'], function () {
+	gulp.src( Config.dist + '*.min.js' )
 		.pipe( gzip() )
-		.pipe( gulp.dest( './' ) )
+		.pipe( gulp.dest( Config.dist ) );
 } );
-gulp.task('addheaders', function() {
-	var file = fs.readFileSync( min_filename ).toString();
+
+//	This task must be executed after minify.
+gulp.task( 'addheader', ['minify'], function () {
+	var file = fs.readFileSync( Config.minFilePath ).toString();
 	file = file.replace(/^\/\*(.|\n)+\*\//, '');
-	fs.writeFileSync( min_filename, file );
+	fs.writeFileSync( Config.minFilePath, file );
 
 	var year = moment().format('YYYY'), 
 		header_options = {
@@ -69,7 +85,7 @@ gulp.task('addheaders', function() {
 	if( !this_year )
 		header_options.year = year;
 
-	gulp.src( min_filename )
+	gulp.src( Config.minFilePath )
 		.pipe( 
 			header( [
 				'/*! ${title} - v${version} - ${date}\n',
@@ -78,10 +94,10 @@ gulp.task('addheaders', function() {
 			].join( '' ), 
 			header_options 
 		) )
-		.pipe( gulp.dest( './' ) );
+		.pipe( gulp.dest( Config.dist ) );
 } );
 
 gulp.task( 'default', [], function () {
-	gulp.watch( [ filename ], [ 'minify', 'gzipify', 'addheaders' ] );
-	gulp.start( [ 'minify', 'gzipify', 'addheaders' ] );
+	gulp.watch( [ Config.filePath ], [ 'minify', 'addheader', 'gzipify' ] );
+	gulp.start( [ 'minify', 'addheader', 'gzipify' ] );
 } );
