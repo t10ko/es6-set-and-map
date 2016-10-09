@@ -7,6 +7,8 @@ Set is a unique collection of items.
 
 This implementation uses hash tables to identify items in Set an Map and gives extra features.
 
+#### Now available with bower with name 'es6-set-and-map'
+
 # Usage.
 
 To use with NodeJS.
